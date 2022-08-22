@@ -1,58 +1,120 @@
-
-function showClick() {
-    console.log(this.textContent);
-}
-
-
-
-
 const screenElement = document.querySelector('#screen');
 screenElement.textContent = '';
+const keys = [...document.querySelectorAll('.key')];
+let expVar = '';
+const nums = [...Array(10).keys()].map((key => key.toString()));
+const ops = ['+', '-', '/', '*'];
 
-// const keyObj = {
-//     'seven': 7,
-//     'eight': 8,
-//     'nine': 9,
-//     'clear': 'C',
-//     'four': 4,
-//     'five': 5,
-//     'six': 6,
-//     'multiply': '*',
-//     'one': 1,
-//     'two': 2,
-//     'three': 3,
-//     'minus': "-",
-//     'zero': 0,
-    
-// }
+keys.map((key) => {
+    key.addEventListener('click', () => {
+        if (nums.includes(key.textContent)) {
+            expVar += key.textContent;
+            console.log(key.textContent);
+        } else if (ops.includes(key.textContent)) {
+            expVar += ' ' + key.textContent + ' ';
+        }
+        screenElement.textContent = expVar;
+        console.log(expVar);
+    })  
+});
 
-function GenKey(key, value, element) {
-    this.key = key;
-    this.value = value;
-    this.element = element;
-    this.type = typeof(key);
-    this.element = document.querySelector('#seven');
-    if (this.type === 'number') {
-        this.value = this.key;
-
-    };
-
-    this.element.addEventListener('click', () => {
-        screenElement.textContent += this.value;
-        console.log(this.element);
-    });
+function add(a, b) {
+    return a + b;
 }
 
-// const key7 = new GenKey(7);
-// console.log(key7.clicked());
+function subtract(a, b) {
+    return a - b;
+}
 
-const keys = document.querySelectorAll('.key');
-const keyObjects = [];
-for (let key of keys) {
-    const keyValue = key.textContent;
-    if (+keyValue) {
-        const newKeyObj = new GenKey(key.id, keyValue, key);
-        keyObjects.push(newKeyObj);
+function multiply(a, b) {
+    return a*b;
+}
+
+function divide(a, b) {
+    return a/b;
+}
+
+function evaluate(exp) {
+    const expArr = exp.split(' ');
+    console.log(expArr);
+    let i = 1;
+    // for (let value of expArr) {
+    //     let newVar;
+    //     if (value === '*' || value === '/') {
+    //         let chunk = expArr.slice(i - 1, 3);
+    //         if (value === '*') {
+    //             newVar = multiply(chunk[0], chunk[2]);
+    //         } else {
+    //             newVar = divide(chunk[0], chunk[2]);
+    //         }
+    //         expArr.splice(i - 1, 3, newVar);
+            
+    //     }
+    //     i++;
+    // }
+
+    // return expArr;
+
+    // Evaluate multiplications and divisions
+
+
+
+    while (expArr.includes('*') || expArr.includes('/')) {
+        // const isOp = (element) => element === '*' || element === '/';
+        let ind = expArr.findIndex((element) => element === '*' || element === '/');
+        
+        
+        console.log(`ind: ${ind}`);
+        let a = +expArr[ind-1];
+        let op = expArr[ind];
+        let b = +expArr[ind+1];
+
+
+        if (op === '*') {
+            expArr.splice(ind - 1, 3, multiply(a, b));
+        } else if (op === '/') {
+            expArr.splice(ind - 1, 3, divide(a, b));
+        }
+        console.log('func1: ') 
+        console.log(expArr)
+        i++;
+        if (i > 50) {
+            return 'ERROR';
+        }
     }
-    key.addEventListener('click', showClick);
+
+    i = 1;
+    while (expArr.includes('+') || expArr.includes('-')) {
+        let a = +expArr[0];
+        let op = expArr[1];
+        let b = +expArr[2];
+
+        // switch (op) {
+        //     case '+': expArr.splice(i - 1, 3, add(a, b));
+        //     case '-': expArr.splice(i - 1, 3, subtract(a, b));
+        // }
+
+        if (op === '+') {
+            expArr.splice(0, 3, add(a, b));
+        } else {
+            expArr.splice(0, 3, subtract(a, b));
+        }
+        console.log('func2')
+        console.log(expArr)
+        i++;
+        if (i > 50) {
+            return 'Error'
+        }
+    }
+    
+    return expArr;
 }
+
+document.querySelector('#equals').addEventListener('click', () => {
+    screenElement.textContent = evaluate(expVar);
+});
+
+document.querySelector('#clear').addEventListener('click', () => {
+    expVar = ''
+    screenElement.textContent = expVar;
+})
