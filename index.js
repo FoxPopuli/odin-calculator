@@ -49,7 +49,6 @@ function GenKey(key, value, element) {
 const keys = document.querySelectorAll('.key');
 const keyObjects = [];
 for (let key of keys) {
-    console.log(key.id)
     const keyValue = key.textContent;
     if (+keyValue) {
         const newKeyObj = new GenKey(key.id, keyValue, key);
