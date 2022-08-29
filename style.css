@@ -32,20 +32,25 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-#screen {
+#screen, #exp-screen {
     color: white;
     display: flex;
-    /* height: 18.5px; */
     flex-wrap: wrap;
     width: 140px;
     border: 1px solid black;
-    padding: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin: 5px;
     justify-content: right;
     align-items: center;
     font-size: 20px;
-    /* overflow-wrap: break-word;
-    white-space: normal; */
 }
+
+#exp-screen {
+    font-size: 15px;
+    margin: 0px; 
+}
+
 
 #keypad {
     /* background-color: lightblue; */

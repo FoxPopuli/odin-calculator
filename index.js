@@ -1,4 +1,5 @@
 const screenElement = document.querySelector('#screen');
+const expScreenElement = document.querySelector('#exp-screen');
 screenElement.textContent = '0';
 const keys = [...document.querySelectorAll('.key')];
 let expVar = '';
@@ -44,6 +45,8 @@ function divide(a, b) {
 
 
 function evaluate(exp) {
+    console.log(exp)
+    expScreenElement.textContent = exp + ' =';
     expArr = exp.split(' ');
 
     // Resolve multiplications and divisions
