@@ -45,8 +45,6 @@ function divide(a, b) {
 
 
 function evaluate(exp) {
-    console.log(exp)
-    expScreenElement.textContent = exp + ' =';
     expArr = exp.split(' ');
 
     // Resolve multiplications and divisions
@@ -63,9 +61,6 @@ function evaluate(exp) {
         } else if (op === '/') {
             expArr.splice(ind - 1, 3, divide(a, b));
         }
-
-        console.log('func1: ') 
-        console.log(expArr)
         
         i++;
         if (i > 50) {
@@ -85,25 +80,24 @@ function evaluate(exp) {
         } else {
             expArr.splice(0, 3, subtract(a, b));
         }
-        console.log('func2')
-        console.log(expArr)
         i++;
         if (i > 50) {
             return 'Error'
         }
     }
-    console.log(expArr);
     expVar = expArr[0];
     return expArr;
 }
 
 document.querySelector('#equals').addEventListener('click', () => {
+    expScreenElement.textContent = expVar + ' =';
     screenElement.textContent = evaluate(expVar);
 });
 
 document.querySelector('#clear').addEventListener('click', () => {
     expVar = '';
     screenElement.textContent = '0';
+    expScreenElement.textContent = '';
 });
 
 document.querySelector('#decimal').addEventListener('click', () => {
@@ -111,6 +105,13 @@ document.querySelector('#decimal').addEventListener('click', () => {
     screenElement.textContent = expVar;
 });
 
+document.querySelector('#backspace').addEventListener('click', () => {
+    const someArr = expVar.split('');
+    someArr.splice(-1, 1);
+    expVar = someArr.join('');
+    screenElement.textContent = expVar;
+
+})
 
 document.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {

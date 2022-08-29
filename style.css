@@ -85,8 +85,10 @@
     transform: scale(0.9);
 }
 
-#equals {
-    width: 140px;
+#equals, #backspace {
+    display: flex;
+    flex: 1;
+    /* width: 140px; */
     border-radius: 10px
 }
 
