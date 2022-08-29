@@ -27,23 +27,6 @@ keys.map((key) => {
     })
 });
 
-function add(a, b) {
-    return a + b;
-}
-
-function subtract(a, b) {
-    return a - b;
-}
-
-function multiply(a, b) {
-    return a*b;
-}
-
-function divide(a, b) {
-    return a/b;
-}
-
-
 function evaluate(exp) {
     expArr = exp.split(' ');
 
@@ -57,9 +40,9 @@ function evaluate(exp) {
         let b = +expArr[ind+1];
 
         if (op === 'x') {
-            expArr.splice(ind - 1, 3, multiply(a, b));
+            expArr.splice(ind - 1, 3, a*b);
         } else if (op === '/') {
-            expArr.splice(ind - 1, 3, divide(a, b));
+            expArr.splice(ind - 1, 3, a/b);
         }
         
         i++;
@@ -76,9 +59,9 @@ function evaluate(exp) {
         let b = +expArr[2];
 
         if (op === '+') {
-            expArr.splice(0, 3, add(a, b));
+            expArr.splice(0, 3, a + b);
         } else {
-            expArr.splice(0, 3, subtract(a, b));
+            expArr.splice(0, 3, a - b);
         }
         i++;
         if (i > 50) {
