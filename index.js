@@ -2,15 +2,16 @@ const screenElement = document.querySelector('#screen');
 screenElement.textContent = '0';
 const keys = [...document.querySelectorAll('.key')];
 let expVar = '';
+let expArr = [];
 const nums = [...Array(10).keys()].map((key => key.toString()));
 const ops = ['+', '-', '/', 'x'];
 
 keys.map((key) => {
     key.addEventListener('click', () => {
-        if (nums.includes(key.textContent)) {
-            expVar += key.textContent;
-        } else if (ops.includes(key.textContent)) {
-            expVar += ' ' + key.textContent + ' ';
+        if (nums.includes(key.id)) {
+            expVar += key.id;
+        } else if (ops.includes(key.id)) {
+            expVar += ' ' + key.id + ' ';
         }
         screenElement.textContent = expVar;
     })  
@@ -32,11 +33,12 @@ function divide(a, b) {
     return a/b;
 }
 
-function evaluate(exp) {
-    const expArr = exp.split(' ');
-    let i = 1;
 
-    // Evaluate multiplications and divisions
+function evaluate(exp) {
+    expArr = exp.split(' ');
+
+    // Resolve multiplications and divisions
+    let i = 1;
     while (expArr.includes('x') || expArr.includes('/')) {
         let ind = expArr.findIndex((element) => element === 'x' || element === '/');
         
@@ -59,6 +61,7 @@ function evaluate(exp) {
         }
     }
 
+    // Resolve addition and subtration
     i = 1;
     while (expArr.includes('+') || expArr.includes('-')) {
         let a = +expArr[0];
@@ -77,7 +80,8 @@ function evaluate(exp) {
             return 'Error'
         }
     }
-    
+    console.log(expArr);
+    expVar = expArr[0];
     return expArr;
 }
 
@@ -86,11 +90,20 @@ document.querySelector('#equals').addEventListener('click', () => {
 });
 
 document.querySelector('#clear').addEventListener('click', () => {
-    expVar = ''
-    screenElement.textContent = expVar;
-})
+    expVar = '';
+    screenElement.textContent = '0';
+});
 
 document.querySelector('#decimal').addEventListener('click', () => {
     expVar += ".";
     screenElement.textContent = expVar;
+});
+
+
+document.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        console.log('expArr: ' + expArr);
+        console.log(typeof expArr);
+        console.log('exVar: ' + expVar);
+    }
 })
