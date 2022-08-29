@@ -14,7 +14,16 @@ keys.map((key) => {
             expVar += ' ' + key.id + ' ';
         }
         screenElement.textContent = expVar;
-    })  
+
+    });
+
+    key.addEventListener('mousedown', () => {
+        key.classList.toggle('pressed');
+    });
+
+    key.addEventListener('mouseup', () => {
+        key.classList.toggle('pressed');
+    })
 });
 
 function add(a, b) {
