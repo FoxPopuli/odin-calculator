@@ -1,20 +1,18 @@
 const screenElement = document.querySelector('#screen');
-screenElement.textContent = '';
+screenElement.textContent = '0';
 const keys = [...document.querySelectorAll('.key')];
 let expVar = '';
 const nums = [...Array(10).keys()].map((key => key.toString()));
-const ops = ['+', '-', '/', '*'];
+const ops = ['+', '-', '/', 'x'];
 
 keys.map((key) => {
     key.addEventListener('click', () => {
         if (nums.includes(key.textContent)) {
             expVar += key.textContent;
-            console.log(key.textContent);
         } else if (ops.includes(key.textContent)) {
             expVar += ' ' + key.textContent + ' ';
         }
         screenElement.textContent = expVar;
-        console.log(expVar);
     })  
 });
 
@@ -36,47 +34,25 @@ function divide(a, b) {
 
 function evaluate(exp) {
     const expArr = exp.split(' ');
-    console.log(expArr);
     let i = 1;
-    // for (let value of expArr) {
-    //     let newVar;
-    //     if (value === '*' || value === '/') {
-    //         let chunk = expArr.slice(i - 1, 3);
-    //         if (value === '*') {
-    //             newVar = multiply(chunk[0], chunk[2]);
-    //         } else {
-    //             newVar = divide(chunk[0], chunk[2]);
-    //         }
-    //         expArr.splice(i - 1, 3, newVar);
-            
-    //     }
-    //     i++;
-    // }
-
-    // return expArr;
 
     // Evaluate multiplications and divisions
-
-
-
-    while (expArr.includes('*') || expArr.includes('/')) {
-        // const isOp = (element) => element === '*' || element === '/';
-        let ind = expArr.findIndex((element) => element === '*' || element === '/');
+    while (expArr.includes('x') || expArr.includes('/')) {
+        let ind = expArr.findIndex((element) => element === 'x' || element === '/');
         
-        
-        console.log(`ind: ${ind}`);
         let a = +expArr[ind-1];
         let op = expArr[ind];
         let b = +expArr[ind+1];
 
-
-        if (op === '*') {
+        if (op === 'x') {
             expArr.splice(ind - 1, 3, multiply(a, b));
         } else if (op === '/') {
             expArr.splice(ind - 1, 3, divide(a, b));
         }
+
         console.log('func1: ') 
         console.log(expArr)
+        
         i++;
         if (i > 50) {
             return 'ERROR';
@@ -88,11 +64,6 @@ function evaluate(exp) {
         let a = +expArr[0];
         let op = expArr[1];
         let b = +expArr[2];
-
-        // switch (op) {
-        //     case '+': expArr.splice(i - 1, 3, add(a, b));
-        //     case '-': expArr.splice(i - 1, 3, subtract(a, b));
-        // }
 
         if (op === '+') {
             expArr.splice(0, 3, add(a, b));
@@ -116,5 +87,10 @@ document.querySelector('#equals').addEventListener('click', () => {
 
 document.querySelector('#clear').addEventListener('click', () => {
     expVar = ''
+    screenElement.textContent = expVar;
+})
+
+document.querySelector('#decimal').addEventListener('click', () => {
+    expVar += ".";
     screenElement.textContent = expVar;
 })
