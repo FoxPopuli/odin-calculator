@@ -84,7 +84,7 @@ document.querySelector('#clear').addEventListener('click', () => {
 });
 
 document.querySelector('#decimal').addEventListener('click', () => {
-    expVar += ".";
+    expVar += '.';
     screenElement.textContent = expVar;
 });
 
